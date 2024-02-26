@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP + JavaScript</title>
+<style>
+  *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    min-height: 100vh;
+    background-color: #e9e9e9;
+  }
+  article{
+    overflow: hidden;
+    text-align: center;
+    padding: 5px;
+    width: 200px;
+    background-color: white;
+    border-radius: 50px;
+  }
+  #pantalla{
+    display: flex;
+    gap: 20px;
+  }
+  .hidden{
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+
+  <button id="listar">Listar</button>
+  <button id="ingresar"> Ingresar Cliente </button>
+  <div id="pantalla" class="hidden"> </div>
+<script>
+
+  let mostrarClientes = document.querySelector('#listar');
+  let pantalla = document.querySelector('#pantalla');
+
+  mostrarClientes.addEventListener('click', () => {
+    pantalla.classList.toggle('hidden')
+  });
+
+  class Clientes{
+    constructor(){
+
+    }
+
+    agregarCliente(caja, nombre, apellido, edad){
+      
+      this.article = document.createElement('article');
+      this.nombre = document.createElement('header');
+      this.edad = document.createElement('p');
+      this.caja = document.querySelector(caja);
+
+      this.nombre.textContent = nombre + " " + apellido;
+      this.edad.textContent = edad;
+  
+      this.article.appendChild(this.nombre);
+      this.article.appendChild(this.edad);
+      this.caja.appendChild(this.article);
+    }
+    ingresarCliente(caja){
+      this.article = document.createElement('article');
+      this.nombre = document.createElement('input');
+      this.edad = document.createElement('input');
+      let boton = document.createElement('button');
+      this.caja = document.querySelector(caja);
+
+      this.article.appendChild(this.nombre);
+      this.article.appendChild(this.edad);
+      this.article.appendChild(boton);
+      this.caja.appendChild(this.article);
+
+
+    }
+
+  }
+
+  fetch('listar.php')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error al enviar los datos al servidor');
+      }
+      // Devuelve una promesa que se resuelve con los datos JSON
+      return response.json(); 
+    })
+    .then(data => {
+      // Manejar los datos una vez que la promesa se resuelva
+      let clientes = [];
+      data.forEach(client => {
+        let cliente = new Clientes();
+        clientes.push(cliente);
+        cliente.agregarCliente("#pantalla", client.CLI_NOMBRE, client.CLI_APELLIDO, client.CLI_EDAD);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+
+
+
+</script>
+</body>
+</html>
