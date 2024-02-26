@@ -115,69 +115,25 @@
         <h1>Busqueda</h1>
     </div>
     <div class="crud-container screen">
-        <article class="client">
-            <img class="c-photo" src="https://unavatar.io/twitter/willsmith" alt="">
-            <div class="c-data">
-                <p>German</p>
-                <p>Canteros</p>
-            </div>
-            <button class="c-close-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                </svg> 
-            </button>
-        </article>
-
-        <article class="client">
-            <img class="c-photo" src="https://unavatar.io/twitter/midudev" alt="">
-            <div class="c-data">
-                <p>Nombre</p>
-                <p>Apellido</p>
-            </div>
-            <button class="c-close-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                </svg>     
-            </button>
-        </article>
-
-        <article class="client">
-            <img class="c-photo" src="https://unavatar.io/twitter/mouredev" alt="">
-            <div class="c-data">
-                <p>Nombre</p>
-                <p>Apellido</p>
-            </div>
-            <button class="c-close-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                </svg>     
-            </button>
-        </article>
     </div>
    </section>
    <script>
-  // Obtener elementos del DOM
-  let guardarCliente = document.querySelector('#guardar-cliente');
+        let guardarCliente = document.querySelector('#guardar-cliente');
         let clienteInfo = document.querySelectorAll('.client-info');
         let screen = document.querySelector('.screen');
 
         clienteInfo = Array.from(clienteInfo);
 
-        // Evento clic en el botón "Enviar"
         guardarCliente.addEventListener('click', () => {
-            // Obtener valores de los campos de entrada
             let cliente = {
                 CLI_NOMBRE : clienteInfo[0].value,
                 CLI_APELLIDO : clienteInfo[1].value,
             }
-            console.log(cliente)
             insertClient(cliente);
-            nuevoCliente(cliente);
+            getClientId(cliente, nuevoCliente)
         });
 
         getClients(nuevoCliente);
-
-
 
         function nuevoCliente(clientData, id){
         
@@ -204,7 +160,6 @@
             let closeBtn = document.createElement('button');
             closeBtn.classList.add('c-close-btn');
 
-            // Crear el elemento SVG
             let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
             svg.setAttribute("fill", "none");
@@ -213,16 +168,13 @@
             svg.setAttribute("stroke", "currentColor");
             svg.setAttribute("class", "w-6 h-6");
 
-            // Crear el elemento path y establecer sus atributos
             let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
             path.setAttribute("strokeLinecap", "round");
             path.setAttribute("strokeLinejoin", "round");
             path.setAttribute("d", "m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0");
 
-            // Agregar el path al SVG
             svg.appendChild(path);
 
-            // Agregar el SVG al cuerpo del documento
             closeBtn.appendChild(svg);
 
             closeBtn.addEventListener('click', () => {
@@ -232,7 +184,6 @@
 
 
         
-            // Agregar los elementos al DOM
             data.appendChild(nombreElement);
             data.appendChild(apellidoElement);
             data.appendChild(idElement);
@@ -246,64 +197,54 @@
 
         function getClients(callback) {
 
-            // Realizar la solicitud GET utilizando fetch()
             fetch('listar.php')
                 .then(response => {
-                    // Verificar si la respuesta es exitosa (código de estado 200-299)
                     if (!response.ok) {
                         throw new Error('No se pudo obtener la respuesta de la solicitud.');
                     }
-                    // Si la respuesta es exitosa, retornar los datos en formato JSON
                     return response.json();
                 })
                 .then(data => {
-                    // Manejar los datos recibidos
                     data.forEach(element => {
-                        callback(element);
+                        callback(element, element.CLI_ID);
                     });
-                    // Aquí puedes realizar cualquier otra acción con los datos recibidos
                 })
                 .catch(error => {
-                    // Manejar cualquier error que ocurra durante la solicitud
                     console.error('Error al obtener los datos:', error);
                 });
         }
 
-        function insertClient(values){
+        function insertClient(data){
 
             const requestOptions = {
-            method: 'POST', // Método de la solicitud
-            headers: {
-                'Content-Type': 'application/json' // Tipo de contenido que estás enviando (en este caso, JSON)
-            },
-            body: JSON.stringify(values) // Convertir los datos a formato JSON antes de enviarlos
-        };
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            };
 
-        // Realizar la solicitud POST utilizando fetch()
-        fetch('alta.php', requestOptions)
-            .then(response => {
-                // Verificar si la respuesta es exitosa (código de estado 200-299)
-                if (!response.ok) {
-                    throw new Error('No se pudo completar la solicitud.');
-                }
-                // Si la respuesta es exitosa, retornar los datos en formato JSON (si los hay)
-                return response.json();
-            })
-            .catch(error => {
-                // Manejar cualquier error que ocurra durante la solicitud
-                console.error('Error al realizar la solicitud:', error);
-            });
-        }
+            fetch('alta.php', requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('No se pudo completar la solicitud.');
+                    }
+                    console.log("Se inserto el registro correctamente")
+                })
+                .catch(error => {
+                    console.error('Error al realizar la solicitud:', error);
+                });
+            }
 
         function deleteClient(id){
                     
             const options = {
-                method: 'DELETE', // Método HTTP DELETE
+                method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json', // Tipo de contenido
-                    // Puedes agregar otros encabezados aquí si es necesario
+                    'Content-Type': 'application/json',
+                    
                 },
-                body: JSON.stringify({ id: id }), // Convertir el ID a JSON y enviarlo en el cuerpo de la solicitud
+                body: JSON.stringify({ id: id }),
             };
             
             fetch('baja.php', options)
@@ -312,12 +253,42 @@
                         throw new Error('No se pudo completar la solicitud DELETE.');
                     }
                     console.log('La solicitud DELETE se completó correctamente.');
-                    // Aquí puedes realizar cualquier otra acción después de eliminar el recurso
                 })
                 .catch(error => {
                     console.error('Error al realizar la solicitud DELETE:', error);
                 });
             }
+        
+        function getClientId(data, callback) {
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            };
+        
+            fetch('getid.php', requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('La solicitud no pudo completarse. Código de estado: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(info => {
+                    if(info != ""){
+                        console.log(info[0].CLI_ID)
+                        callback(data, info[0].CLI_ID)
+                    }
+                    else{
+                        console.log("Registro Inexistente")
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al realizar la solicitud:', error);
+                    throw error;
+                });
+        }
    </script>
 </body>
 </html>

@@ -40,8 +40,36 @@ class ORM{
 
     }
 
-    public function getId(){
-        $sql = "SELECT CLI_ID FROM CLIENTES WHERE CLI_NOMBRE = 'German' AND CLI_APELLIDO = 'Canteros';"
+    public function getId($data){
+        $sql = "SELECT * FROM $this->table WHERE ";
+
+        $keys = array_keys($data);
+        
+        foreach ($data as $key => $value) {
+            if(is_string($value)){
+                $sql .= $key. " = ". "'". $value. "'".  " AND ";
+            }
+            else{
+                $sql .= $key. " = ". $value. " AND ";
+            }
+        }
+        $sql = trim($sql, " AND ");
+        $stm = $this->connection->prepare($sql);
+        if (!$stm) {
+            // Manejar el error si la preparación de la consulta falla
+            die("Error al preparar la consulta: " . $this->connection->error);
+        }
+        $stm->execute();
+    
+        $result = $stm->get_result();
+
+        if (!$result) {
+            die("Error al obtener el resultado: " . $stm->error);
+        }
+
+        return $this->toArray($result);
+
+
     }
 
     public function deleteById($id){
@@ -79,7 +107,6 @@ class ORM{
 
         $stm = $this->connection->prepare($sql);
         $stm->execute();
-        echo $sql;
     }
 }
 ?>
